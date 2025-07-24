@@ -24,7 +24,6 @@
                    payload: data
                  }
         }
-
 - Action creator passes parameters to store as payload
 
         // Dispatched when the user types in the search input.
