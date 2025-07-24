@@ -1,30 +1,40 @@
 # REDUX-REDUCER
 
-- Determine the states structure:
+- IN THE STORE ACTION CREATORS, AND REDUCERS.
 - state = {
       feature1: [ { array },{ of },{ objects } ],
       feature2: 'string'
   }
-- The initialState provides how many features or slices of the apps state.
-- Create InitialState object of properties/features/slices and their initial values
- 
+- The initialState provides how many features or slices are in the apps state.
+- Create InitialState object which includes properties/features/slices and their initial values.  ‘sliceName/actionName’
+
          const initialStateObject = {
              property1: property1InitialValue,
              porperty2: property2InitialValue,
          }
-- Dertermine types of action to dispatch or how to trigger changes to these slice with actions
+- Dertermine types of action to dispatch
+- How to trigger changes to these slice with actions
 - Actions are js objects with a type: 'sliceName/actionDescriptor' and payload: action.payload
 - They are dispatched with store.dispatch( store.dispatch({ type: 'searchTerm/setSearchTerm', payload: 'Spaghetti' });)
-- Remember, action creators are functions that return a formatted action object. So we call the function whenever we need to that action
- 
-            // Dispatched when the user types in the search input.
-            // Sends the search term to the store.
-            export const setSearchTerm = (term) => {
-              return { 
-                type: 'searchTerm/setSearchTerm', 
-                payload: term 
-              };
-            }
+- Remember, action creators are functions that return a formatted action object. We use a function so the action can be re-used whenever action is required and sent to STORE.
+
+        const actionName = (data) {
+              return {
+                   type: 'sliceName/actionName',
+                   payload: data
+                 }
+        }
+
+- Action creator passes parameters to store as payload
+
+        // Dispatched when the user types in the search input.
+        // Sends the search term to the store.
+        export const setSearchTerm = (term) => {
+           return { 
+               type: 'searchTerm/setSearchTerm', 
+               payload: term 
+             };
+        }
 - The stores reducer receives the initialState and will execute all the possible changes that can occur to the state.
 
       const reciperReducer = (state-initialState, action) => {
