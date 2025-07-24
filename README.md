@@ -7,23 +7,24 @@
   }
 - The initialState provides how many features or slices of the apps state.
 - Create InitialState object of properties/features/slices and their initial values
-- const initialStateObject = {
-      property1: property1InitialValue,
-      porperty2: property2InitialValue,
-  }
-- Derrtermine types of action to dispatch or how to trigger changes to these slice with actions
+- 
+             const initialStateObject = {
+                  property1: property1InitialValue,
+                  porperty2: property2InitialValue,
+              }
+- Dertermine types of action to dispatch or how to trigger changes to these slice with actions
 - Actions are js objects with a type: 'sliceName/actionDescriptor' and payload: action.payload
 - They are dispatched with store.dispatch( store.dispatch({ type: 'searchTerm/setSearchTerm', payload: 'Spaghetti' });)
 - Remember, action creators are functions that return a formatted action object. So we call the function whenever we need to that action
-- 
-- // Dispatched when the user types in the search input.
-// Sends the search term to the store.
-export const setSearchTerm = (term) => {
-  return { 
-    type: 'searchTerm/setSearchTerm', 
-    payload: term 
-  };
-}
+ 
+            // Dispatched when the user types in the search input.
+            // Sends the search term to the store.
+            export const setSearchTerm = (term) => {
+              return { 
+                type: 'searchTerm/setSearchTerm', 
+                payload: term 
+              };
+            }
 - The stores reducer receives the initialState and will execute all the possible changes that can occur to the state.
 
 const reciperReducer = (state-initialState, action) => {
