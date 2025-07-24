@@ -7,7 +7,7 @@
   }
 - The initialState provides how many features or slices of the apps state.
 - Create InitialState object of properties/features/slices and their initial values
-- 
+ 
              const initialStateObject = {
                   property1: property1InitialValue,
                   porperty2: property2InitialValue,
