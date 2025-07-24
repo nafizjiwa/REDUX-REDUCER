@@ -16,7 +16,8 @@
 - How to trigger changes to these slice with actions
 - Actions are js objects with a type: 'sliceName/actionDescriptor' and payload: action.payload
 - They are dispatched with store.dispatch( store.dispatch({ type: 'searchTerm/setSearchTerm', payload: 'Spaghetti' });)
-- Remember, action creators are functions that return a formatted action object. We use a function so the action can be re-used whenever action is required and sent to STORE.
+- Remember, action creators functions return an action object. We use a function so the action can be re-used whenever action is required.
+- AC are dispatched by user interaction and the action is sent to STORE
 
         const actionName = (data) {
               return {
