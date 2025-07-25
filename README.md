@@ -7,7 +7,7 @@
               - InitialState Object-
               - Action Creator Functions -
                     - Contain the Actions
-              - Reducer -
+              - Single Reducer -
                     - Passed the current state and action
                     - Returns the store's next state
         - Export Action Creators -
@@ -111,18 +111,20 @@
   #### - So action.payload.id
 - NOTE: Don't mutate the state object or state.favoriteRecipes array!
 
-### For complex states with more than one reducer. Solution = Reducer Composition Pattern
+### For complex states with multiple reducers. Solution = Reducer Composition Pattern
 
-- .
 #### When action dispatched to store
 - rootReducer calls slice reducer with the action and slice of state
 - Slice reducers decide if they need updating or return their slice unchanged
 - RootReducer reassembles the updated slice values in a new object
 - PROS: Each slice reducer only receives its slice of the entire application’s state
 - Resctructe the above Reducer 3 slice reducer
-- Replace initialState object with initialSliceName variables as defaults values for each slice reducer's slice of state.
+- Replace initialState object with initialSliceName variables
+- Variable is the default value for each slice reducer's slice of state.
         - eg. const initialAllRecipes = []
-        - (param = 'default value') => {} eg. allrecipes = initialAllRecipes
+        - (param = 'default value') => {}
+        - eg. const allRecipesReducer = (allrecipes = initialAllRecipes) => {
+                  switch statement}
 - Create Individual _**slice reducers**_ responsible for only one slice of the store's state
 
         - Reducer 1 = const allRecipesReducer(state,action)=> {switch cases}
@@ -136,23 +138,69 @@
 - favoritesRecipesReducer() receives favoritesRecipes slice of state
         - return [...favoriteRecipes, action.payload];
 - To combine allReducersSlicesOfState() with rootReducer()
-- l
+- 
 
         const nextState = {
           sliceA: sliceAReducer(state.sliceA, action),
           sliceB: sliceBReducer(state.sliceB, action)
         }
-- favoriteRecipesReducer() updates the slice of state state.favoriteRecipes
+- favoriteRecipesReducer() updates the slice of state `state.favoriteRecipes`
 - It responds to these action.type cases
 - 'favoriteRecipes/addRecipe':
         - case 'favoriteRecipes/addRecipe':
-                  return [...favoriteRecipes, action.payload];
+                  return [...favoriteRecipes, action.payload];        
  
--
 - 'favoriteRecipes/removeRecipe':
         - case 'favoriteRecipes/removeRecipe':
-                 return [ state.favoriteRecipes.filter(favorite=>favorite.id !== action.payload.id)}
+                 return [ favoriteRecipes.filter(favorite=>favorite.id !== action.payload.id)}
 - 'default':
           - default:
                   return favoriteRecipes;
+        
+        const rootReducer = (state = {}, action) => {
+          const nextState = {
+            allRecipes: allRecipesReducer(state.allRecipes, action),
+            searchTerm: searchTermReducer(state.searchTerm, action),
+            // Add in the favoriteRecipes slice with favoriteRecipesReducer function. 
+            favoriteRecipes: favoriteRecipesReducer(state.favoriteRecipes, action)
+          } 
+          return nextState;
+        }        
 
+### Reducer Composition Pattern: Redux has a combinReducer() function to create a rootReducer for you  
+- `Create a reducer object` with the slice reducers
+        - The keys are all the slices the reducer manages
+        - The Key value = reducer function but don't call function
+  
+        const reducers = {
+          sliceA: sliceAReducer, // Right.
+        };
+
+- combineReducers() function accepts the reducer object to `return a reducer function`
+
+        const rootReducer = combineReducers(reducers);
+- The reducer function is passed to createStore() to create a `store` object:
+
+        const store = createStore(rootReducer);
+- So the original boilerplate code:
+        
+        import { createStore } from 'redux';
+        // todosReducer and filterReducer omitted
+        
+        const rootReducer = (state = {}, action) => {
+          const nextState = {
+            todos: todosReducer(state.todos, action),
+            filter: filterReducer(state.filter, action)
+          };
+          return nextState;
+        };
+        
+        const store = createStore(rootReducer);
+
+### Simplifies to
+
+        const store = createStore(combineReducers({
+            todos: todosReducer,
+            filter: filterReducer
+        }));
+- Action is dispatched to the store, rootReducer is executed by calling each slice reducer by passing the action and its slice of state
