@@ -203,4 +203,42 @@
             todos: todosReducer,
             filter: filterReducer
         }));
-- Action is dispatched to the store, rootReducer is executed by calling each slice reducer by passing the action and its slice of state
+- Action is dispatched to the store, rootReducer is executed by calling each slice reducer with its action and its slice of state
+
+### Refractoring Redux File
+- The store can get very big expecially when the store has 10,12 or more slices.
+- Best practice is to break it up with the REDUX DUCK PATTERN
+- Where Redux logic is in top level directories called src/
+        - src/index.j
+        - src/app
+             -app/store
+        - src/features
+             - sliceFolders
+                  - sliceNameSlice.js
+                  - sliceNameReactComponent.js
+- The sub directories contain all the code for individual slices of the stores state
+- This refactor involved exporting each of the slice reducers and action creators, so that they could be imported back into store.js.
+1. The slice reducers should exist in separate files.
+- The store.js new structure is:
+        
+          --store.js--
+            Section 1
+            import { createStore, combineReducers } from 'redux';
+          
+            Section 2
+            //Import the slice reducers from other files
+            import { sliceNameReducer } from 'file location../featuresSliceName/sliceNameSlice.js'
+        
+            Section 3
+            //Construct reducer object
+            const reducers = { sliceName: sliceNameRducer,}
+        
+            Section 4
+            //Declare store
+            const store = createStore(combineReducers(reducersObject))
+        
+            Section 5
+            //Export store so available
+            export store;
+  
+  
