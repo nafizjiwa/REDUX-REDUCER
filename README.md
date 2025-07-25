@@ -136,5 +136,23 @@
 - favoritesRecipesReducer() receives favoritesRecipes slice of state
         - return [...favoriteRecipes, action.payload];
 - To combine allReducersSlicesOfState() with rootReducer()
+- l
 
+        const nextState = {
+          sliceA: sliceAReducer(state.sliceA, action),
+          sliceB: sliceBReducer(state.sliceB, action)
+        }
+- favoriteRecipesReducer() updates the slice of state state.favoriteRecipes
+- It responds to these action.type cases
+- 'favoriteRecipes/addRecipe':
+        - case 'favoriteRecipes/addRecipe':
+                  return [...favoriteRecipes, action.payload];
+ 
+-
+- 'favoriteRecipes/removeRecipe':
+        - case 'favoriteRecipes/removeRecipe':
+                 return [ state.favoriteRecipes.filter(favorite=>favorite.id !== action.payload.id)}
+- 'default':
+          - default:
+                  return favoriteRecipes;
 
