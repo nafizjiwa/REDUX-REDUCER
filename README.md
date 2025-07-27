@@ -205,13 +205,16 @@
         }));
 - Action is dispatched to the store, rootReducer is executed by calling each slice reducer with its action and its slice of state
 
-### Refractoring Redux File
+### Refractoring for Large Redux Files
 - The store can get very big expecially when the store has 10,12 or more slices.
 - Best practice is to break it up with the REDUX DUCK PATTERN
 - Where Redux logic is in top level directories called src/
         - src/index.j
         - src/app
              -app/store
+             -app/App.js
+        - src/components
+             -components/reactfileName.js
         - src/features
              - sliceFolders
                   - sliceNameSlice.js
@@ -240,5 +243,31 @@
             Section 5
             //Export store so available
             export store;
-  
-  
+
+### Pass Store Data through Top Level React Components
+NOTE: React apps top level component <App/> renders feature <components/> and passes data needed by those components as prop values.
+Redux passes data to feature <components/>:
+1. The components slice of the store's state
+2. store.dispatch method to trigger state changes after user interaction
+Hence these are passed to <App/> component but not in the <App/> componenet itself like in react but in index.js
+First import { store } from its file './app/store.js'
+Second pass props 1. state = current state of store and 2. dispatch = store.dispatch method
+Lastly
+3. Subscribe render to changes to the `store` with store.subscribe(render) so <App/> re-renders with all changes
+            <App 
+              state={store.getState()}
+              dispatch={store.dispatch}
+            />
+### Using the Store's Data within Features Components
+
+Passing the current state of the store and its dispatch mehtod to the top level component <App/> allows it to pass them to each feature component.
+
+All Redux React app with feature components follow this structure
+- import the React feature component into the top level App.js file
+- Render each feature component passing slice of state and dispatch as props
+- Within the feature component
+  - Extract the slice of state and disptach from props
+  - Render the components with its state
+  - import action creators from the slice file
+  - dispatch action in response to user inputs.
+
