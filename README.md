@@ -264,10 +264,39 @@ Passing the current state of the store and its dispatch mehtod to the top level 
 
 All Redux React app with feature components follow this structure
 - import the React feature component into the top level App.js file
+  --App.js--
+   import FavoriteRecipes from '../features/favoriteRecipes/FavoriteRecipes';
 - Render each feature component passing slice of state and dispatch as props
-- Within the feature component
+  const function App(props){
+          const {state, dispatch} = props;
+       return (
+                <FeaturesRecipes
+                  featureRecipes={visibleFavoriteRecipes}
+                  dispatch={dispatch}
+                 />
+  }
+- Within the feature component (which has 2 jobs)
   - Extract the slice of state and disptach from props
-  - Render the components with its state
+
+    const FavoriteRecipes = (props) =>{
+    // Extract dispatch and favoriteRecipes slice
+    const { favoriteRecipes, dispatch } = props;
+  - Component has access to state of slice now
+  - Render the components with its states slice
+
+    const FavoriteRecipes = (props) =>{
+            //other code ommitted
+          return(
+    {favoriteRecipes.map(createRecipeComponent)}
+    )
   - import action creators from the slice file
+
+     import { removeRecipe }  from './favoriteRecipesSlice.js';
   - dispatch action in response to user inputs.
+ 
+    const onRemoveRecipeHandler = (recipe) => {
+    // Dispatch a removeRecipe() action.
+    // with removeRecipe() action creator
+      dispatch(removeRecipe(recipe));
+  };
 
