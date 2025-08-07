@@ -66,12 +66,13 @@
           case 'favoriteRecipes/addRecipe':
             return {...state, favoriteRecipes: [...state, action.payload] }
           case 'favoriteRecipes/removeRecipe':
-            return {..state, favoriteRecipes: state.favoriteRecipes.filter(favorite=>favorite.id !== action.payload.id)}
+            return {..state, favoriteRecipes: state.favoriteRecipes.filter(favorite = >
+                                                  favorite.id !== action.payload.id)}
           default:
             return state;
         }
       }
- //Within the switch statement of recipesReducer()
+ //Within the switch statement of recipesReducer( )
  ##### Action Types
 - `searchTerm/setSearchTerm` action type (action).
           - Dispatched with a payload value = the new term value for `state.searchTerm`.
