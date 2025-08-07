@@ -75,8 +75,8 @@
  //Within the switch statement of recipesReducer( )
  ##### Action Types
 - `searchTerm/setSearchTerm` action type (action).</br>
-          - Dispatched with a payload value = the new term value for `state.searchTerm`.
-          - Action: The reducer returns a new state object searchTerm slice = action.payload new Term.
+          - Dispatched with a payload value = the new term value for `state.searchTerm`. </br>
+          - Action: The reducer returns a new state object searchTerm slice = action.payload new Term.</br>
 - `setSearchTerm() action creator` passes the new term to the recipesReducer as action.payload property. 
 
       case 'sliceName/actionType':
